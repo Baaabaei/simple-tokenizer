@@ -1,197 +1,271 @@
-# Simple Tokenizer
+# 🤖 Automatic Prompt Engineer
 
-A lightweight, educational tokenizer built from scratch for encoding and decoding simple English text, designed for understanding the fundamentals of tokenization in Large Language Models (LLMs).
+> Interactive Prompt Builder for optimizing Large Language Model interactions with automated suggestion and refinement.
 
----
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
-## 📖 About
+## 📌 Overview
 
-This repository contains a simple, educational tokenizer that demonstrates the core concepts behind how LLMs process text. It's built entirely in Python without external dependencies, making it perfect for learning how tokenization works under the hood.
-
-**Created by:** [Baaabaei](https://github.com/Baaabaei)
-
----
+This project provides an **interactive prompt engineering tool** that helps users:
+- Create and refine prompts for LLMs
+- Test prompts against different models
+- Get suggestions for improvement
+- Store and manage prompt libraries
+- Analyze prompt performance metrics
 
 ## ✨ Features
 
-- **Basic Text Encoding**: Convert text into token IDs
-- **Text Decoding**: Convert token IDs back to readable text
-- **Simple Vocabulary**: Understand the mapping between tokens and IDs
-- **Educational Focus**: Clean, readable code for learning purposes
-- **No External Dependencies**: Pure Python implementation
+✅ **Interactive UI** - Build prompts step-by-step  
+✅ **Multi-Model Support** - Test with OpenAI, Claude, Gemini  
+✅ **Prompt Analysis** - Get metrics on prompt quality  
+✅ **Template Library** - Pre-built prompt templates  
+✅ **A/B Testing** - Compare prompt variations  
+✅ **History Tracking** - Save and manage prompt iterations  
 
----
+## 🎯 Key Capabilities
 
-## 📁 Repository Structure
+### 1. Interactive Prompt Builder
+```python
+from prompt_engineer import PromptBuilder
 
+builder = PromptBuilder()
+
+# Add components
+builder.set_role("expert software engineer")
+builder.set_task("write Python code")
+builder.set_constraints("no external libraries")
+builder.add_examples([
+    {"input": "fibonacci", "output": "def fib(n)..."}
+])
+
+prompt = builder.generate()
+print(prompt)
 ```
-simple-tokenizer/
-├── simple_tokenizer.py      # Version 1: Basic implementation
-├── simple_tokenizer_v2.py   # Version 2: Improved/enhanced version
-└── README.md                # Project documentation
+
+### 2. Prompt Optimization
+```python
+from prompt_engineer import PromptOptimizer
+
+optimizer = PromptOptimizer()
+
+# Analyze and improve prompt
+original = "Write code for sorting"
+suggestions = optimizer.analyze(original)
+
+for suggestion in suggestions:
+    print(f"- {suggestion.type}: {suggestion.recommendation}")
 ```
 
----
+### 3. Multi-Model Testing
+```python
+from prompt_engineer import MultiModelTester
 
-## 🚀 Getting Started
+tester = MultiModelTester()
+tester.add_model("gpt-4", api_key=...)
+tester.add_model("claude-2", api_key=...)
 
-### Prerequisites
-- Python 3.x
-- No additional libraries required
+results = tester.test_prompt(prompt, num_samples=5)
+for model, scores in results.items():
+    print(f"{model}: {scores['average_quality']:.2f}")
+```
+
+## 🚀 Quick Start
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/Baaabaei/simple-tokenizer.git
+git clone https://github.com/Baaabaei/Automatic-Prompt-Engineer.git
+cd Automatic-Prompt-Engineer
 
-# Navigate to the project directory
-cd simple-tokenizer
-
-# Run the tokenizer
-python simple_tokenizer.py
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
----
+### Basic Usage
+
+```python
+from prompt_engineer import PromptBuilder, PromptTester
+
+# Build a prompt
+builder = PromptBuilder()
+builder.set_role("data scientist")
+builder.set_task("analyze sentiment")
+prompt = builder.generate()
+
+# Test the prompt
+tester = PromptTester(api_key="your-openai-key")
+results = tester.test(prompt, test_cases=[
+    "This product is amazing!",
+    "Not worth the price"
+])
+
+print(f"Success rate: {results['success_rate']:.1%}")
+```
+
+## 📊 Features Breakdown
+
+### Prompt Components
+
+```yaml
+Prompt Structure:
+├── Role/Context
+│   └── Define who the AI should act as
+├── Task Description
+│   └── What the AI should do
+├── Constraints
+│   └── Limitations and requirements
+├── Examples (Few-shot)
+│   └── Input-output demonstrations
+├── Format Instructions
+│   └── How to structure responses
+└── Tone/Style
+    └── Communication style preferences
+```
+
+### Analysis Metrics
+
+| Metric | Description |
+|--------|-------------|
+| Clarity | How clear is the prompt? |
+| Specificity | How specific are the instructions? |
+| Completeness | Does it cover all requirements? |
+| Ambiguity | Are there ambiguous terms? |
+| Length | Is it concise? |
+| Effectiveness | How well does it perform? |
 
 ## 💻 Usage Examples
 
-### Basic Tokenization
+### Example 1: Building a Customer Service Prompt
 
 ```python
-from simple_tokenizer import SimpleTokenizer
+from prompt_engineer import PromptBuilder
 
-# Initialize the tokenizer
-tokenizer = SimpleTokenizer()
+builder = PromptBuilder()
+builder.set_role("customer service representative")
+builder.set_task("help customers with product issues")
+builder.add_constraint("be empathetic and helpful")
+builder.add_constraint("respond within 2 sentences")
+builder.add_example(
+    input_text="Product stopped working",
+    output_text="I'm sorry to hear that! Let's troubleshoot...."
+)
 
-# Example text
-text = "Hello, world! This is a simple tokenizer."
-
-# Encode text to token IDs
-tokens = tokenizer.encode(text)
-print(f"Tokens: {tokens}")
-
-# Decode token IDs back to text
-decoded_text = tokenizer.decode(tokens)
-print(f"Decoded: {decoded_text}")
+prompt = builder.generate()
 ```
 
----
+### Example 2: Comparing Prompt Variations
 
-## 🔧 Implementation Details
+```python
+from prompt_engineer import MultiModelTester
 
-### How It Works
+prompts = {
+    "basic": "Write a poem about nature",
+    "detailed": "Write a 10-line poem about nature in spring with imagery",
+    "constrained": "Write a poem about nature (10 lines, spring theme, no rhyming)"
+}
 
-1. **Vocabulary Building**: Creates a mapping between words/subwords and unique IDs
-2. **Encoding Process**: Splits text into tokens and converts to IDs
-3. **Decoding Process**: Converts token IDs back to readable text
+tester = MultiModelTester()
+for name, prompt in prompts.items():
+    score = tester.evaluate(prompt)
+    print(f"{name}: {score.effectiveness:.2f}")
+```
 
-### Key Components
+### Example 3: A/B Testing
 
-- **Tokenizer Class**: Main class handling encode/decode operations
-- **Vocabulary**: Dictionary mapping tokens to integer IDs
-- **Special Tokens**: Handles unknown/out-of-vocabulary tokens
+```python
+from prompt_engineer import ABTester
 
----
+tester = ABTester()
 
-## 📊 Comparison: Simple Tokenizer vs. Advanced Tokenizers
+prompt_a = "Summarize this text"
+prompt_b = "Provide a concise 2-3 sentence summary of this text"
 
-| Feature | Simple Tokenizer | BPE Tokenizer | SentencePiece |
-|---------|-----------------|---------------|---------------|
-| **Complexity** | Simple | Moderate | Advanced |
-| **Subword Support** | ❌ No | ✅ Yes | ✅ Yes |
-| **Unknown Token Handling** | Basic | Advanced | Advanced |
-| **Educational Value** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| **Use Case** | Learning | Production | Production |
+results = tester.compare(prompt_a, prompt_b, iterations=100)
+print(f"Winner: {results['winner']}")
+print(f"Improvement: {results['improvement']:.1%}")
+```
 
----
+## 🏗️ Architecture
 
-## 🎯 Purpose & Learning Goals
+```
+┌──────────────────────────────────┐
+│   Interactive UI (Streamlit)     │
+└────────────────┬─────────────────┘
+                 │
+    ┌────────────┼────────────┐
+    │            │            │
+    ▼            ▼            ▼
+┌──────────┐ ┌──────────┐ ┌──────────┐
+│ Builder  │ │ Analyzer │ │ Tester   │
+└────┬─────┘ └────┬─────┘ └────┬─────┘
+     │            │            │
+     └────────────┼────────────┘
+                  ▼
+         ┌─────────────────┐
+         │  Prompt Storage │
+         │   & History     │
+         └─────────────────┘
+                  │
+     ┌────────────┼────────────┐
+     │            │            │
+     ▼            ▼            ▼
+  OpenAI       Claude       Gemini
+   API          API          API
+```
 
-This project is designed to help developers understand:
-- **Fundamental Concepts**: How tokenization forms the first step in NLP pipelines
-- **Inner Workings**: What happens when text is converted to numbers for model processing
-- **Implementation Basics**: How to build a simple but functional tokenizer
-- **LLM Foundation**: Why tokenization is crucial for language models
+## 🧪 Testing
 
----
+```bash
+# Run tests
+python -m pytest tests/
 
-## 🛠️ Future Improvements
+# Test with coverage
+python -m pytest --cov=prompt_engineer tests/
+```
 
-Potential enhancements that could be added:
-- [ ] Subword tokenization (BPE/WordPiece)
-- [ ] Support for non-English text
-- [ ] Special token handling ([UNK], [PAD], [CLS])
-- [ ] Vocabulary size configurability
-- [ ] Save/load vocabulary functionality
-- [ ] Performance optimizations
-- [ ] Unit tests
-- [ ] Command-line interface
+## 📚 Template Library
 
----
+Pre-built templates for:
+- Code generation
+- Text summarization
+- Sentiment analysis
+- Question answering
+- Creative writing
+- Data analysis
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
-4. Open issues for bugs or suggestions
-
----
-
-## 📚 Learning Resources
-
-For those wanting to dive deeper into tokenization:
-- **Hugging Face Tokenizers**: Production-ready tokenization library
-- **GPT-2 Tokenizer**: BPE implementation by OpenAI
-- **SentencePiece**: Google's subword tokenizer
-- **BERT Tokenizer**: WordPiece implementation
-
----
+Contributions welcome! Areas:
+- New templates
+- Additional models
+- Analysis metrics
+- UI improvements
 
 ## 📄 License
 
-This project is open source and available under the MIT License.
+MIT License - See [LICENSE](LICENSE) file.
+
+## 🗺️ Roadmap
+
+- [ ] Web-based UI
+- [ ] More model integrations
+- [ ] Prompt marketplace
+- [ ] Team collaboration features
+- [ ] Advanced analytics dashboard
+
+## ⭐ Show Your Support
+
+If this tool helps with prompt engineering:
+- ⭐ Star this repository
+- 🔗 Share with your team
+- 💬 Leave feedback
+- 🤝 Contribute templates/improvements
 
 ---
 
-## 👤 Author
+**Optimizing Prompt Engineering! 🚀**
 
-**Baaabaei**
-- GitHub: [@Baaabaei](https://github.com/Baaabaei)
-
----
-
-## ⭐ Support the Project
-
-If you find this project helpful for learning:
-- Star the repository ⭐
-- Share with others learning about LLMs
-- Contribute improvements
-- Open issues for questions
-
----
-
-## 🧠 Why Tokenization Matters
-
-Tokenization is the critical first step in all modern NLP/LLM pipelines:
-
-```
-1. Input Text → 2. Tokenization → 3. Token IDs → 4. Embeddings → 5. Model Processing
-```
-
-Understanding tokenization helps demystify how models like GPT, BERT, and other LLMs process text data.
-
----
-
-## 📞 Contact & Support
-
-For questions or support:
-- Open an issue on GitHub
-- Reach out to the maintainer
-- Check the documentation
-
----
-
-*Built with ❤️ for the developer community*
+*Last Updated: July 2026 | Maintained by [@Baaabaei](https://github.com/Baaabaei)*
